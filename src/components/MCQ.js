@@ -1,3 +1,4 @@
+/* eslint-disable */
 // import required styles modules to style elements
 import styles from '../styles/pages.module.css';
 
