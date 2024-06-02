@@ -1,0 +1,80 @@
+.errorBox{
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 0px 15px;
+    margin-bottom: 10px;
+}
+.btn{
+    width: 100px;
+}
+.inputElem span{
+    font-size: larger;
+    display: flex;
+    width: 60%;
+    padding-bottom: 2px;
+    padding-left: 20px;
+}
+.inputElem input{
+    height: 16px;
+    width: 20px;
+}
+.result{
+    border: 1px solid #6050ef46;
+}
+.success{
+    border: 2px solid rgb(0, 255, 0);
+    color: rgb(0, 255, 0);
+}
+.correct{
+    color: rgb(0, 255, 0);
+}
+.failed{
+    border: 2px solid red;
+    color: red;
+}
+.wrong{
+    color: red;
+}
+.card {
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 6px 4px 8px rgba(0, 0, 0, 0.1), inset 1px 1px 4px rgba(0, 0, 0, 0.1)
+}
+@media only screen and (min-width: 0px) and (max-width: 540px) {
+    .leaderCard:nth-child(1){
+        flex-direction: column-reverse;
+    }
+    .leaderCard{
+        flex-direction: column;
+    }
+    .leaderCard h5{
+        font-size: xx-large;
+    }
+    .homeContainer,.leaderboardScoreContainer,.loginContainer,.registerContainer,.quizContainer{
+        width: 100%!important;    
+        margin: 0px;
+    }
+    .card {
+        height: 380px;
+    }
+    .contentContainer {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 2px solid black;
+        width: 100%;
+    }
+
+    .subcontent {
+        margin-top: 0px !important;
+        width: 100%;
+    }
+}
+@media only screen and (min-width: 541px) and (max-width: 768px) {
+    .homeContainer,.leaderboardScoreContainer,.loginContainer,.registerContainer,.quizContainer{
+        width: 80%!important;    
+    }
+}

@@ -2,6 +2,43 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Quiz Application
+
+Quiz Application using React and Redux
+
+## Introduction
+
+This is a Quiz Application created to facilitate online assessments and quizzes.
+
+## Features
+
+### Topic Selection Page
+
+- **SELECT TOPICS:** Users can select topics to start the quiz.
+- **SUBMIT TOPICS:** After selecting topics, users can submit and start the quiz.
+
+### MCQ Page
+
+- **MCQ QUESTIONS:** Multiple Choice Questions are presented to users.
+- **SUBMIT & NEXT:** Users can submit their answers and move to the next question.
+- **VIEW SCORE:** At the end of the quiz, users can view their score.
+
+### Leaderboard Page
+
+- **LEADERBOARD:** Users can view the leaderboard with scores from other participants.
+
+### User Authentication
+
+- **LOGIN:** Users can log in to access the quiz.
+- **REGISTER:** New users can register to create an account.
+
+## Requirements
+
+- Install Node.js and npm to run the application.
+- Redux Toolkit is used for state management.
+- React Router is used for navigation between pages.
+- Install required Node modules using `npm i`.
+
 ## Available Scripts
 
 In the project directory, you can run:
