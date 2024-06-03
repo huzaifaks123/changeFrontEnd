@@ -29,7 +29,6 @@ export default function Login({ setIsRegistered }) {
 
     // dispatch logoutAsyncThunk and clear errorMessage on component mount
     useEffect(() => {
-        console.log("Dispatching in login");
         dispatch(logoutAsyncThunk());
         dispatch(setErrorMessage(""));
     }, [dispatch]);

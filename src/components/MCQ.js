@@ -1,4 +1,5 @@
-/* eslint-disable */
+
+
 // import required styles modules to style elements
 import styles from '../styles/pages.module.css';
 
@@ -10,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ScoreAsyncThunk, TopicSelector } from '../redux/reducers/HomePageReducer';
 
 // export MCQ Component
-export default function MCQ({ setShowQuestions, setSelectedTopics }) {
+export default function MCQ({ setShowQuestions }) {
     // define necessary state for MCQ component
     const [serial, setSerial] = useState(0);
     const [question, setQuestion] = useState();
@@ -27,23 +28,22 @@ export default function MCQ({ setShowQuestions, setSelectedTopics }) {
 
     // load initial question on component mount
     useEffect(() => {
-        loadQuestion();
-    }, []);
+        const randomNumber = Math.floor(Math.random() * (questions.length - 0)) + 0;
+        setQuestion(questions[randomNumber]);
+        setIndex([randomNumber]);
+        setSerial(1);
+    }, [dispatch, questions]);
 
-    // post score when showResult changes
-    useEffect(() => {
-        if (showResult) {
-            postScore();
-        }
-    }, [showResult]);
 
-    // function to load a random question
+    // load next question
     const loadQuestion = () => {
         const randomIndex = getRandomNumber(0, questions.length - 1);
         if (randomIndex !== -1) {
             setQuestion(questions[randomIndex]);
             setSerial(serial + 1);
             setSelectedOption(null);
+        } else {
+            postScore();
         }
     };
 
@@ -81,8 +81,10 @@ export default function MCQ({ setShowQuestions, setSelectedTopics }) {
     // function to handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log(questions);
         const currentQuestion = questions[index[index.length - 1]];
         const selectedOptionIndex = parseInt(selectedOption);
+        console.log(selectedOptionIndex, currentQuestion);
         const correctOptionIndex = currentQuestion.options.indexOf(currentQuestion.answer);
         const isCorrect = selectedOptionIndex === correctOptionIndex;
 
@@ -108,7 +110,6 @@ export default function MCQ({ setShowQuestions, setSelectedTopics }) {
     // function to navigate back to assessment
     const handleHomeView = () => {
         setShowQuestions(false);
-        setSelectedTopics([])
     };
 
     // return MCQ form or result based on showResult state
@@ -122,7 +123,7 @@ export default function MCQ({ setShowQuestions, setSelectedTopics }) {
                         <form id="mcq-form" onSubmit={handleSubmit}>
                             {question.options.map((option, i) => (
                                 <div key={i} className={`mb-3 d-flex align-items-center ${styles.inputElem}`}>
-                                    <input type="radio" className="" name="option" id={`option${i}`} value={i} onChange={handleChange} checked={parseInt(selectedOption) === i} required/>
+                                    <input type="radio" className="" name="option" id={`option${i}`} value={i} onChange={handleChange} checked={parseInt(selectedOption) === i} required />
                                     <label htmlFor={`option-${i}`} className="ms-3">{option}</label>
                                 </div>
                             ))}
@@ -133,7 +134,7 @@ export default function MCQ({ setShowQuestions, setSelectedTopics }) {
                     </div>
                 ) :
                 <>
-                    <h1 className='text-center mb-5'>Your Score : {score}/{serial - 1}</h1>
+                    <h1 className='text-center mb-5'>Your Score : {score}/{serial}</h1>
 
                     {result.map((res, index) => (
                         <div key={index} className={`mx-auto mt-5 p-5 rounded ${styles.card}`}>
@@ -159,3 +160,5 @@ export default function MCQ({ setShowQuestions, setSelectedTopics }) {
         </div>
     );
 }
+
+
