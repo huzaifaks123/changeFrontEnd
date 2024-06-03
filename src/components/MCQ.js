@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ScoreAsyncThunk, TopicSelector } from '../redux/reducers/HomePageReducer';
 
 // export MCQ Component
-export default function MCQ({ setShowQuestions }) {
+export default function MCQ({ setShowQuestions ,setSelectedTopics}) {
     // define necessary state for MCQ component
     const [serial, setSerial] = useState(0);
     const [question, setQuestion] = useState();
@@ -110,6 +110,7 @@ export default function MCQ({ setShowQuestions }) {
     // function to navigate back to assessment
     const handleHomeView = () => {
         setShowQuestions(false);
+        setSelectedTopics([])
     };
 
     // return MCQ form or result based on showResult state
