@@ -3,7 +3,7 @@ import styles from '../styles/navbar.module.css';
 import style from '../styles/sidemenu.module.css';
 
 // import routing elements to render without reloading tab
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 // import necessary hooks for state management
 import { useDispatch, useSelector } from 'react-redux';
@@ -41,7 +41,7 @@ const Navbar = () => {
         dispatch(checkAuthAsyncThunk());
         const path = location.pathname.slice(1);
         dispatch(setActive(path));
-    }, [dispatch]);
+    }, [dispatch,location.pathname]);
 
     // function to toggle SideMenu visibility
     function toggleMenu() {
