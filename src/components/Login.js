@@ -25,7 +25,7 @@ export default function Login({ setIsRegistered }) {
     const navigate = useNavigate();
 
     // get errorMessage from Redux store
-    const { errorMessage } = useSelector(UserSelector);
+    const { errorMessage ,loading} = useSelector(UserSelector);
 
     // dispatch logoutAsyncThunk and clear errorMessage on component mount
     useEffect(() => {
@@ -55,6 +55,7 @@ export default function Login({ setIsRegistered }) {
     // return Login form
     return (
         <div id="login-container" className={`w-50 mx-auto px-4 mt-4 ${styles.loginContainer}`}>
+            {loading?<h1 className='text-center position-absolute end-0 bottom-0'>Signing In...</h1>:""}
             <h1>Login to continue...</h1>
             {errorMessage && (
                 <div className={`alert alert-danger ${styles.errorBox}`} role="alert">

@@ -31,13 +31,20 @@ export default function LeaderBoard() {
     };
 
     // Retrieve leaderboard data from Redux store
-    const { leaderBoard } = useSelector(BoardSelector);
+    const { leaderBoard, loading } = useSelector(BoardSelector);
 
     // Sort leaderboard data by score
     useEffect(() => {
         const sorted = [...leaderBoard].sort((a, b) => b.score - a.score);
         setSortedLeaderBoard(sorted);
     }, [leaderBoard]);
+
+    // render loading status
+    if (loading) {
+        return (
+            <h1 className='text-center'>loading...</h1>
+        )
+    }
 
     // Render the leaderboard component
     return (

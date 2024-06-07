@@ -23,7 +23,7 @@ export default function Register({ setIsRegistered }) {
     }, [dispatch]);
 
     // Get error message from Redux store
-    const { errorMessage } = useSelector(UserSelector);
+    const { errorMessage, loading } = useSelector(UserSelector);
 
     // Function to handle form submission
     const handleSubmit = async (event) => {
@@ -44,6 +44,7 @@ export default function Register({ setIsRegistered }) {
     // Return Register form
     return (
         <div id="register-container" className={`w-50 mx-auto px-4 mt-4 ${styles.registerContainer}`}>
+            {loading ? <h1 className='text-center position-absolute end-0 bottom-0'>Registering...</h1> : ""}
             <h1>Register to continue...</h1>
             {errorMessage && (
                 <div className={`alert alert-danger ${styles.errorBox}`} role="alert">

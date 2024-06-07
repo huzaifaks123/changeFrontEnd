@@ -6,7 +6,9 @@ import { fetchWithToken } from "./UserReducer";
 const initialState = {
     topics: [],
     questions: [],
-    score: null
+    score: null,
+    loading: false,
+    error: null,
 };
 
 // Define async thunks to fetch topics
@@ -67,9 +69,34 @@ const TopicSlice = createSlice({
             state.questions = action.payload;
         },
         setScore: (state, action) => {
-            state.questions = action.payload;
+            state.score = action.payload;
         },
     },
+    extraReducers: (builder) => {
+        builder
+            .addCase(TopicsAsyncThunk.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(TopicsAsyncThunk.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(TopicsAsyncThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            .addCase(QuestionsAsyncThunk.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(QuestionsAsyncThunk.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(QuestionsAsyncThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+    }
 });
 
 // Export reducer for the store

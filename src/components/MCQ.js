@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ScoreAsyncThunk, TopicSelector } from '../redux/reducers/HomePageReducer';
 
 // export MCQ Component
-export default function MCQ({ setShowQuestions ,setSelectedTopics}) {
+export default function MCQ({ setShowQuestions, setSelectedTopics }) {
     // define necessary state for MCQ component
     const [serial, setSerial] = useState(0);
     const [question, setQuestion] = useState();
@@ -42,8 +42,6 @@ export default function MCQ({ setShowQuestions ,setSelectedTopics}) {
             setQuestion(questions[randomIndex]);
             setSerial(serial + 1);
             setSelectedOption(null);
-        } else {
-            postScore();
         }
     };
 
@@ -56,6 +54,7 @@ export default function MCQ({ setShowQuestions ,setSelectedTopics}) {
     const getRandomNumber = (min, max) => {
         if (serial >= 5) {
             setShowResult(true);
+            postScore();
             return -1;
         }
         const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -69,7 +68,6 @@ export default function MCQ({ setShowQuestions ,setSelectedTopics}) {
     // function to post score to API
     const postScore = async () => {
         try {
-            console.log("score in component", score);
             await dispatch(ScoreAsyncThunk(score)).unwrap();
             setShowQuestions(true);
             console.log('post Score successfully');
@@ -81,10 +79,8 @@ export default function MCQ({ setShowQuestions ,setSelectedTopics}) {
     // function to handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(questions);
         const currentQuestion = questions[index[index.length - 1]];
         const selectedOptionIndex = parseInt(selectedOption);
-        console.log(selectedOptionIndex, currentQuestion);
         const correctOptionIndex = currentQuestion.options.indexOf(currentQuestion.answer);
         const isCorrect = selectedOptionIndex === correctOptionIndex;
 

@@ -25,12 +25,12 @@ export default function TopicSelection() {
     }, [dispatch]);
 
     // Get topics from Redux store
-    const { topics } = useSelector(TopicSelector);
+    const { topics, loading } = useSelector(TopicSelector);
 
     // Function to handle checkbox change
     const handleChange = (event) => {
         const { value, checked } = event.target;
-        setSelectedTopics((prevState) => 
+        setSelectedTopics((prevState) =>
             checked ? [...prevState, value] : prevState.filter((topic) => topic !== value)
         );
     };
@@ -47,9 +47,17 @@ export default function TopicSelection() {
         }
     };
 
+    // render loading status
+    // if (loading) {
+    //     return (
+    //     )
+    // }
+
     // Return Topic Selection form or MCQ component based on showQuestion state
     return (
         !showQuestion ? (
+            <>
+            {loading?<h1 className='text-center'>loading...</h1>:
             <>
                 <h1 className='text-center mb-5'>Select topics to Start</h1>
                 <form id="topic-form" className='d-flex flex-wrap justify-content-center container-fluid' onSubmit={handleFormSubmit}>
@@ -62,7 +70,8 @@ export default function TopicSelection() {
                     <div className="text-end">
                         <button type='submit' className={`btn btn-primary mt-4 ${styles.btn}`}>Submit</button>
                     </div>
-                </form>
+                </form></>
+                }
             </>
         ) : (
             <MCQ setShowQuestions={setShowQuestions} setSelectedTopics={setSelectedTopics} />
