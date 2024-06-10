@@ -1,10 +1,8 @@
-
-
 // import required styles modules to style elements
 import styles from '../styles/pages.module.css';
 
 // import necessary hooks for state management and side effects
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // import actions and selectors from HomePageReducer
@@ -34,6 +32,22 @@ export default function MCQ({ setShowQuestions, setSelectedTopics }) {
         setSerial(1);
     }, [dispatch, questions]);
 
+    // function to post score to API
+    const postScore = useCallback(async () => {
+        try {
+            await dispatch(ScoreAsyncThunk(score)).unwrap();
+            console.log('post Score successfully');
+        } catch (err) {
+            console.error('Failed to post data to API:', err);
+        }
+    }, [dispatch, score]);
+
+    useEffect(() => {
+        if (serial >= 5) {
+            postScore();
+        }
+    }, [serial, score, postScore])
+
 
     // load next question
     const loadQuestion = () => {
@@ -54,7 +68,6 @@ export default function MCQ({ setShowQuestions, setSelectedTopics }) {
     const getRandomNumber = (min, max) => {
         if (serial >= 5) {
             setShowResult(true);
-            postScore();
             return -1;
         }
         const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -63,17 +76,6 @@ export default function MCQ({ setShowQuestions, setSelectedTopics }) {
             return randomNumber;
         }
         return getRandomNumber(min, max);
-    };
-
-    // function to post score to API
-    const postScore = async () => {
-        try {
-            await dispatch(ScoreAsyncThunk(score)).unwrap();
-            setShowQuestions(true);
-            console.log('post Score successfully');
-        } catch (err) {
-            console.error('Failed to post data to API:', err);
-        }
     };
 
     // function to handle form submission
@@ -98,7 +100,7 @@ export default function MCQ({ setShowQuestions, setSelectedTopics }) {
 
         // update score if the answer is correct
         if (isCorrect) {
-            setScore(score + 1);
+            setScore((prev) => prev + 1)
         }
         loadQuestion();
     };
